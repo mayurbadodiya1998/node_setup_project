@@ -49,6 +49,7 @@ class AuthenticationController {
                 throw new CustomError(RESPONSE_MESSGE.AUTHENTICAION.EMAIL_EXIST, 409);
             }
             const encPassword = await hashPassword(body.password)
+            console.log("inside function")
             const params = {
                 firstName: body.first_name,
                 lastName: body.last_name,
