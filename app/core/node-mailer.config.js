@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
     auth: {
-        user: 'ddommy378@gmail.com',
+        user: process.env.NODE_MAILER_EMAIL,
         pass: 'qkyz vmkn ezqc nqgt',
     },
     // logger: true, // Logs information
@@ -17,14 +17,14 @@ const transporter = nodemailer.createTransport({
 
 export async function sendMail(to, subject, text) {
     const mailOptions = {
-        from:'ddommy378@gmail.com',
+        from: process.env.NODE_MAILER_EMAIL,
         to,
         subject,
         text
     };
     try {
-        const info = await transporter.sendMail(mailOptions,(err,mailRes)=>{
-            if(err)
+        const info = await transporter.sendMail(mailOptions, (err, mailRes) => {
+            if (err)
                 throw err;
             return { success: true, mailRes };
         });
