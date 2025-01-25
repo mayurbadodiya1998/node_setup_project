@@ -65,8 +65,8 @@ class AuthenticationController {
                 otp: otp,
                 type: "email_verifivation"
             }
-            const createOtp = await authenticationService.createOtp(otpParams);
-            const sent = await sendMail(createUser.email, 'Verification Otp', `${otp} for verification`);
+            await authenticationService.createOtp(otpParams);
+            // const sent = await sendMail(createUser.email, 'Verification Otp', `${otp} for verification`);
             return res.status(200).json(response.success(RESPONSE_MESSGE.AUTHENTICAION.OTP_SEND, createUser));
         }
         catch (e) {
@@ -75,7 +75,20 @@ class AuthenticationController {
     }
     async sendOtp(req, res, next) {
         try {
-
+            const body = req.body;
+            const isEmailExist = await authenticationService.getUserDetailsByEmail(body.email);
+            if (!isEmailExist) {
+                throw new CustomError("Email does not exist", 404)
+            }
+            const otp = generateOtp();
+            const otpParams = {
+                userId: isEmailExist._id,
+                otp: otp,
+                type: "forget_password"
+            }
+            await authenticationService.removeOtps(isEmailExist._id);
+            await authenticationService.createOtp(otpParams);
+            return res.status(200).json(response.success("Otp Sent to your Email", {}));
         }
         catch (e) {
             next(e)

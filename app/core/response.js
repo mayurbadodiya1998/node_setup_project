@@ -1,27 +1,28 @@
-class Response{
-    constructor(){}
-    success(message,data,metadata){
-        let obj={
+class Response {
+    constructor() { }
+    success(message, data, metadata) {
+        let obj = {
             message,
-            status:"success",
-            data:data||{}
+            success: 1,
+            data: data || {}
         }
-        if(metadata){
-            obj['meta']=metadata;
+        if (metadata) {
+            obj['meta'] = metadata;
         }
         return obj
     }
-   
-    failure(message,error_code,error){
+
+    failure(message, error_code, error) {
         return {
-            status: "error",
             message: message,
+            status: "error",
+            success: 0,
             data: null,
             error: {
-              code: error_code,
-              details:error
+                code: error_code,
+                details: error
             }
-          }
+        }
     }
 }
 export default new Response();

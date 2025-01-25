@@ -14,15 +14,20 @@ class AuthenticationService {
     async createOtp(params) {
         const create = await authModel.create(params);
         return create;
+
     }
-    async verifyOtp(params){
-        const otpDetails=await authModel.findOne({otp:params.otp,userId:params.userId})
+    async removeOtps(userId) {
+        return authModel.deleteMany({ userId })
+
+    }
+    async verifyOtp(params) {
+        const otpDetails = await authModel.findOne({ otp: params.otp, userId: params.userId })
         return otpDetails;
     }
-    async updateUserVerify(id){
-        const update=await userModel.updateOne({_id:id},{isVerified:true});
-        const remove = await authModel.deleteOne({_id:id});
-        console.log("remove",remove)
+    async updateUserVerify(id) {
+        const update = await userModel.updateOne({ _id: id }, { isVerified: true });
+        const remove = await authModel.deleteOne({ userId: id });
+        console.log("remove", remove)
         return update;
     }
 }
