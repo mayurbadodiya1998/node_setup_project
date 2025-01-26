@@ -11,9 +11,14 @@ const app = express();
 dotenv.config()
 
 const PORT = process.env.PORT;
-const dbUri = process.env.DATABASE_URI
+let dbUri = '';
+if (process.env.MODE === 'development') {
+    dbUri = process.env.DATABASE_URI
+}
+else {
+    dbUri = process.env.PROD_DATABASE_URI
+}
 
-// Middleware for parsing JSON
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));

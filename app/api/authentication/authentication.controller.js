@@ -4,7 +4,7 @@ import response from '../../core/response.js';
 import { RESPONSE_MESSGE } from '../../core/response.message.js';
 import CustomError from '../../core/custom.error.js';
 import logger from "./../../core/winston.config.js";
-import { sendMail } from '../../core/node-mailer.config.js';
+import { createMail, sendMail } from '../../core/node-mailer.config.js';
 
 class AuthenticationController {
     constructor() { }
@@ -12,6 +12,7 @@ class AuthenticationController {
         try {
 
             const body = req.body;
+            await createMail()
             const userDetails = await authenticationService.getUserDetailsByEmail(body.email);
             if (userDetails == null) {
                 throw new CustomError(RESPONSE_MESSGE.AUTHENTICAION.USER_NOT_FOUND, 401);
@@ -67,7 +68,7 @@ class AuthenticationController {
                 type: "email_verifivation"
             }
             await authenticationService.createOtp(otpParams);
-            // const sent = await sendMail(createUser.email, 'Verification Otp', `${otp} for verification`);
+            const sent = await sendMail(createUser.email, 'Verification Otp', `${otp} for verification`);
             return res.status(200).json(response.success(RESPONSE_MESSGE.AUTHENTICAION.OTP_SEND, createUser));
         }
         catch (e) {
