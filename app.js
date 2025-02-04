@@ -24,11 +24,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const corsOptions = {
     credentials: true,
-    origin: ['http://localhost:4200', 'http://localhost:80'] // Whitelist the domains you want to allow
+    origin: "*"
 };
 
-app.use(cors(corsOptions)); // Use the cors middleware with your options
-
+app.use(cors(corsOptions));
 
 // Set up routes
 app.use('/api', routes)

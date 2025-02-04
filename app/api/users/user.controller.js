@@ -9,7 +9,6 @@ class UserController {
   async get(req, res) {
     try {
       const users = await userService.getAllUsers()
-      console.log("users ", users)
       res.json(response.success(RESPONSE_MESSGE.USER.USER_LIST, users))
     }
     catch (e) {
@@ -27,7 +26,6 @@ class UserController {
         password: encPassword,
         email: body.email
       }
-      console.log(params)
       const createUser = await userService.createUser(params);
       res.json(response.success(RESPONSE_MESSGE.USER.USER_ADD, createUser))
     }

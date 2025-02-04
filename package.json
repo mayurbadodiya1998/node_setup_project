@@ -2,8 +2,10 @@
   "name": "learning",
   "version": "0.0.0",
   "private": true,
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon --exec npx babel-node app.js"
+    "start": "node app.js",
+    "dev": "nodemon --exec npx babel-node app.js"
   },
   "type": "module",
   "dependencies": {
@@ -26,8 +28,10 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.26.4",
-    "@babel/core": "^7.26.0",
+    "@babel/core": "^7.26.7",
     "@babel/node": "^7.26.0",
-    "@babel/preset-env": "^7.26.0"
+    "@babel/preset-env": "^7.26.7",
+    "@babel/register": "^7.25.9",
+    "serverless-bundle": "^6.3.1"
   }
 }

@@ -33,7 +33,6 @@ class AuthenticationController {
             }
             logger.info(userDetails)
             const token = encodeToken(prepareUserDetails);
-            console.log("login rea ", token)
             return res.status(200).json(response.success(RESPONSE_MESSGE.AUTHENTICAION.LOGIN, token));
         }
         catch (error) {
@@ -50,7 +49,6 @@ class AuthenticationController {
                 throw new CustomError(RESPONSE_MESSGE.AUTHENTICAION.EMAIL_EXIST, 409);
             }
             const encPassword = await hashPassword(body.password)
-            console.log("inside function")
             const params = {
                 firstName: body.first_name,
                 lastName: body.last_name,
@@ -105,7 +103,6 @@ class AuthenticationController {
                 otp: body.otp
             }
             const otpDetails = await authenticationService.verifyOtp(params);
-            console.log(otpDetails);
             if (!otpDetails) {
                 throw new CustomError("Invalid OTP", 401);
             }
